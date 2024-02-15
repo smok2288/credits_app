@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h2>Добавление кредитной заявки</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.contract }}
+    {{ form.products }}
+    <input type="submit" value="Добавить">
+    <a href="{{ BACK_URL }}">Назад</a>
+</form>
+</body>
+</html>

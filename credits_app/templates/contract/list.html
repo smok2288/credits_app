@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Контракты</h2>
+<div>
+
+    <a href="{% url 'contracts:createcontract' %}">Создать</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>ID производителя/ Наименование</th>
+        <th>Номер контракта</th>
+        <th>Дата создания</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for contract in contracts %}
+    <tr>
+        <td>
+            <ul>
+                {% for product in  contract.loan_contract.products.all %}
+                <li>{{ product.id }} / {{product.name }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>{{ contract.number }}</td>
+        <td>{{ contract.created_at|date:'d.m.Y' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{{ BACK_URL }}">Назад</a>
+</body>
+</html>

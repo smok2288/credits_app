@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Кредитные заявки</h2>
+
+<div>
+
+    <a href="{% url 'contracts:create_loanrequests' %}">Создать</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Заявка на кредит</th>
+        <th>Товары</th>
+        <th>Дата создания</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for loanrequest in loanrequests %}
+    <tr>
+        <td>{{ loanrequest.id }}</td>
+        <td>{{ loanrequest.id }}</td>
+        <td>
+            <ul>
+                {% for product in loanrequest.products.all %}
+                <li>{{ product.name }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>{{ loanrequest.created_at|date:'d.m.Y' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{{ BACK_URL }}">Назад</a>
+</body>
+</html>

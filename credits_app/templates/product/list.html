@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Товары</h2>
+<div>
+
+    <a href="{% url 'contracts:create_product' %}">Создать</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Наименование товара</th>
+        <th>Производитель</th>
+        <th>Дата создания</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for product in products %}
+    <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.manufacturer }}</td>
+        <td>{{ product.created_at|date:'d.m.Y' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{{ BACK_URL }}">Назад</a>
+</body>
+</html>
