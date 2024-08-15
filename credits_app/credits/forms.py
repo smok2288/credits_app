@@ -29,3 +29,7 @@ class CreateLoanRequestsForm (forms.ModelForm):
     class Meta:
         model = models.LoanRequest
         fields = ("contract", "products")
+
+
+class SearchManufacturerForm(forms.Form):
+    number = forms.IntegerField(label="Id контракта", min_value=0, required=True)

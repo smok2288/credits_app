@@ -15,6 +15,23 @@
     <a href="{% url 'contracts:products_list' %}" class="button">Товары</a>
     <a href="{% url 'contracts:loanrequests_list' %}" class="button">Кредитные заявки</a>
 </div>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Поиск">
+</form>
+<div>
+    {% if manufacturer_ids %}
+    <h3>Уникальные ID производителей:</h3>
+    <ul>
+        {% for id in manufacturer_ids %}
+        <li>{{ id }}</li>
+        {% endfor %}
+    </ul>
+    {% elif error %}
+    <p>{{ error }}</p>
+    {% endif %}
+</div>
 
 </body>
 </html>

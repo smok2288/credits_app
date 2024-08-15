@@ -7,7 +7,18 @@ from . import forms, models
 
 
 def home(request):
-    return render(request, 'list.html')
+    form = forms.SearchManufacturerForm(request.POST or None)
+    context = {"form": form}
+    if request.method == "POST" and form.is_valid():
+        contract_id = request.POST.get('number')
+        try:
+            loan_request = models.LoanRequest.objects.get(contract__id=contract_id)
+            manufacturers = loan_request.products.distinct()
+            return render(request, 'manufacturer/list_manufacturer.html', {"manufacturers": manufacturers, "contract_id": contract_id})
+        except models.LoanRequest.DoesNotExist:
+            context["error"] = "Кредитная заявка с таким id контракта не найдена."
+
+    return render(request, 'list.html', context)
 
 
 def contract_list(request):
