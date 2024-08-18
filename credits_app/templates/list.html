@@ -19,12 +19,13 @@
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Поиск">
+    <a class="btn btn-primary" href="#" title="Просмотр"></a>
 </form>
 <div>
-    {% if manufacturer_ids %}
+    {% if manufacturers %}
     <h3>Уникальные ID производителей:</h3>
     <ul>
-        {% for id in manufacturer_ids %}
+        {% for id in manufacturers %}
         <li>{{ id }}</li>
         {% endfor %}
     </ul>

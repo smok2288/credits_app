@@ -18,17 +18,19 @@ class CreateManufacturerForm (forms.ModelForm):
 
 
 class CreateProductForm (forms.ModelForm):
+    loan_request = forms.ModelChoiceField(queryset=models.LoanRequest.objects.all(), required=False)
 
     class Meta:
         model = models.Product
-        fields = ("name", "manufacturer")
+        fields = ("name", "manufacturer", "loan_request")
 
 
 class CreateLoanRequestsForm (forms.ModelForm):
+    contract = forms.ModelChoiceField(queryset=models.Contract.objects.filter(loan_request__isnull=True))
 
     class Meta:
         model = models.LoanRequest
-        fields = ("contract", "products")
+        fields = ("number", "contract",)
 
 
 class SearchManufacturerForm(forms.Form):

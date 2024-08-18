@@ -15,8 +15,8 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Заявка на кредит</th>
-        <th>Товары</th>
+        <th>Номер</th>
+        <th>Контракт</th>
         <th>Дата создания</th>
     </tr>
     </thead>
@@ -25,14 +25,8 @@
     {% for loanrequest in loanrequests %}
     <tr>
         <td>{{ loanrequest.id }}</td>
-        <td>{{ loanrequest.id }}</td>
-        <td>
-            <ul>
-                {% for product in loanrequest.products.all %}
-                <li>{{ product.name }}</li>
-                {% endfor %}
-            </ul>
-        </td>
+        <td>{{ loanrequest.number }}</td>
+        <td>{{ loanrequest.contract }}</td>
         <td>{{ loanrequest.created_at|date:'d.m.Y' }}</td>
     </tr>
     {% endfor %}

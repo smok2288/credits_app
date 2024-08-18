@@ -14,7 +14,6 @@
 <table>
     <thead>
     <tr>
-        <th>ID</th>
         <th>Производители</th>
         <th>Дата создания</th>
     </tr>
@@ -23,7 +22,6 @@
     <tbody>
   {% for manufacturer in manufacturers %}
     <tr>
-        <td>{{ manufacturer.id }}</td>
         <td>{{ manufacturer.name }}</td>
         <td>{{ manufacturer.created_at|date:'d.m.Y' }}</td>
     </tr>

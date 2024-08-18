@@ -11,13 +11,13 @@ def home(request):
     context = {"form": form}
     if request.method == "POST" and form.is_valid():
         contract_id = request.POST.get('number')
-        try:
-            loan_request = models.LoanRequest.objects.get(contract__id=contract_id)
-            manufacturers = loan_request.products.distinct()
-            return render(request, 'manufacturer/list_manufacturer.html', {"manufacturers": manufacturers, "contract_id": contract_id})
-        except models.LoanRequest.DoesNotExist:
-            context["error"] = "Кредитная заявка с таким id контракта не найдена."
-
+        manufacturers = models.LoanRequest.objects.filter(contract_id=contract_id).exclude(
+            products__manufacturer_id__isnull=True).values_list(
+            'products__manufacturer_id', flat=True).distinct()
+        if manufacturers:
+            context["manufacturers"] = manufacturers
+        else:
+            context["error"] = "Не найдено ни одного производителя для данной кредитной заявки."
     return render(request, 'list.html', context)
 
 
@@ -69,9 +69,13 @@ def loanrequests_list(request):
 
 
 def create_loanrequests(request):
-    form = forms.CreateLoanRequestsForm(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        return redirect(reverse("contracts:loanrequests_list"))
-    context = {"form": form}
+    if models.Contract.objects.filter(loan_request__isnull=True):
+        form = forms.CreateLoanRequestsForm(request.POST or None)
+        context = {"form": form}
+        if request.method == "POST" and form.is_valid():
+            form.save()
+            return redirect(reverse("contracts:loanrequests_list"))
+    else:
+        context = {"error": "Для контракта возможна только одна кредитная заявка. Пожалуйста, создайте новый контракт."}
+
     return render(request, "loanrequest/create.html", context)
